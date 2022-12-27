@@ -5,7 +5,33 @@
 </head>
 <body>
 <h1>User, welcome spring boot security page!</h1>
+<div>
+    <table>
 
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Password</th>
+        <th>Username</th>
+        <th>Edit</th>
+        </tr>
+
+        <tr th:object="${user}">
+            <td th:utext="${user.getId()}"> id </td>
+            <td th:utext="${user.getName()}"> name </td>
+            <td th:utext="${user.getSurname()}"> surname </td>
+            <td th:utext="${user.getUsername()}"> username </td>
+            <td th:utext="${user.getPassword()}"> password </td>
+        </tr>
+
+
+    </table>
+
+</div>
+
+<br/><br/>
+<a href="/logout"> Logout </a>
+<br/><br/>
 
 </body>
 </html>
