@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
 @Service
 public class DetailService implements UserDetailsService {
 
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
+   @Autowired
     public DetailService(UserService userService) {
         this.userService = userService;
     }
