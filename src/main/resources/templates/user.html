@@ -9,17 +9,17 @@
     <table>
 
         <th>ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Password</th>
+        <th>Name</th>
+        <th>Surname</th>
         <th>Username</th>
+        <th>Password</th>
         <th>Edit</th>
         </tr>
 
         <tr th:object="${user}">
             <td th:utext="${user.getId()}"> id </td>
             <td th:utext="${user.getName()}"> name </td>
-            <td th:utext="${user.getSurname()}"> surname </td>
+            <td th:utext="${user.getSurname}"> surname </td>
             <td th:utext="${user.getUsername()}"> username </td>
             <td th:utext="${user.getPassword()}"> password </td>
         </tr>
