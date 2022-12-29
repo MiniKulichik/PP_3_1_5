@@ -38,20 +38,19 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public Role findByName(String name) {
-        return entityManager.createQuery("select u FROM Role u WHERe u.name = :id",
+        return entityManager.createQuery("select r FROM Role r WHERE r.name = :id",
                         Role.class).setParameter("id", name)
                 .getResultList().stream().findAny().orElse(null);
     }
 
     @Override
     public List<Role> listByName(List<String> name) {
-        return  entityManager.createQuery("select u FROM Role u WHERe u.name in (:id)",
+        return  entityManager.createQuery("select r FROM Role r WHERE r.name in (:id)",
                         Role.class).setParameter("id", name).getResultList();
     }
 
     @Override
-    public boolean addRole(Role role) {
+    public void addRole(Role role) {
         entityManager.persist(role);
-        return true;
     }
 }

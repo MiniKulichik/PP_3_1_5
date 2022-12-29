@@ -40,15 +40,13 @@ public class RoleServiceImpl implements RoleService {
         roleDao.editRole(role);
     }
 
-
     @Override
     public List<Role> listByName(List<String> name) {
         return roleDao.listByName(name);
     }
 
     @Override
-    public boolean addRole(Role role) {
+    public void addRole(Role role) {
         roleDao.addRole(role);
-        return true;
     }
 }

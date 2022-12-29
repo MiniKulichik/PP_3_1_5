@@ -19,7 +19,7 @@ public interface RoleDao {
 
     List<Role> listByName(List<String> name);
 
-    boolean addRole(Role role);
+    void addRole(Role role);
 
 
 }
