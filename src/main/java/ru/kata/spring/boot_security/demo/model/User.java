@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,14 +33,14 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
-            joinColumns = @JoinColumn(name = "users_id"),
-            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
 
-    private Set<Role> roles;
+    private List<Role> roles;
     public User() {
     }
 
-    public User(String name, String surname, String password, String username, Set<Role> roles) {
+    public User(String name, String surname, String password, String username, List<Role> roles) {
         this.name = name;
         this.surname = surname;
         this.password = password;
@@ -79,17 +80,17 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        return getRoles();
     }
 
     @Override
@@ -122,7 +123,4 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void addRole(Role role) {
-        this.roles.add(role);
-    }
 }
