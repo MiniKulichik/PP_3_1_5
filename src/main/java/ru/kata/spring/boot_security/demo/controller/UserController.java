@@ -24,7 +24,7 @@ public class UserController {
         this.detailService = detailService;
     }
 
-    @GetMapping("/info")
+    @GetMapping
     public String edit(Model model, Principal principal) {
         model.addAttribute("user",
                 detailService.loadUserByUsername(principal.getName()));

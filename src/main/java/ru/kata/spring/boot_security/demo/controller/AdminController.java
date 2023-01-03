@@ -24,43 +24,43 @@ public class AdminController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public String showAllUsers(Model model) {
         model.addAttribute("allUsers", userService.getAllUsers());
-        return "all-Users";
+        return "admin-user";
     }
 
-    @GetMapping("/new")
+    @PostMapping("/new")
     public String newUser(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("roleList", roleService.getList());
-        return "add-User";
+        return "admin-user";
     }
 
     @PostMapping()
     public String createUser(@ModelAttribute("user") User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.saveUser(user);
-        return "redirect:/admin/all";
+        return "redirect:/admin";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
         model.addAttribute("user", userService.getUser(id));
         model.addAttribute("roleList", roleService.getList());
-        return "edit-User";
+        return "admin-user";
     }
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("user") User user) {
         userService.updateUser(user);
-        return "redirect:/admin/all";
+        return "redirect:/admin";
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     public String delete(@ModelAttribute("user") User user,
                          @PathVariable("id") int id) {
         userService.deleteUser(id);
-        return "redirect:/admin/all";
+        return "redirect:/admin";
     }
 }
