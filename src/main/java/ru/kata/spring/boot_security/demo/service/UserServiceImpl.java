@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,15 +37,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDao.saveUser(user);
+    public void addUser(User user) {
+        userDao.addUser(user);
     }
 
     @Override
-    public void updateUser(User user) {
+    public void editUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDao.updateUser(user);
+        userDao.editUser(user);
     }
 
     @Override
@@ -54,5 +55,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         return userDao.findByUsername(username);
+    }
+
+    @Override
+    public User getAuthUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userDao.findByUsername(auth.getName());
     }
 }

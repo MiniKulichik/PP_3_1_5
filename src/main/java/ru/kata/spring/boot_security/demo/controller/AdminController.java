@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,42 +26,12 @@ public class AdminController {
     }
 
     @GetMapping
-    public String showAllUsers(Model model) {
-        model.addAttribute("allUsers", userService.getAllUsers());
+    public String getUser(Model model, Authentication authentication) {
+        model.addAttribute("userList", userService.getAllUsers());
+        User user = (User) authentication.getPrincipal();
+        model.addAttribute("user", (User) authentication.getPrincipal());
+        model.addAttribute("roleList",roleService.getList());
+        model.addAttribute("users", userService.getUser(user.getId()));
         return "admin-user";
-    }
-
-    @PostMapping("/new")
-    public String newUser(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("roleList", roleService.getList());
-        return "admin-user";
-    }
-
-    @PostMapping()
-    public String createUser(@ModelAttribute("user") User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.saveUser(user);
-        return "redirect:/admin";
-    }
-
-    @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("user", userService.getUser(id));
-        model.addAttribute("roleList", roleService.getList());
-        return "admin-user";
-    }
-
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") User user) {
-        userService.updateUser(user);
-        return "redirect:/admin";
-    }
-
-    @DeleteMapping("/{id}/delete")
-    public String delete(@ModelAttribute("user") User user,
-                         @PathVariable("id") int id) {
-        userService.deleteUser(id);
-        return "redirect:/admin";
     }
 }

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -24,13 +25,16 @@ public class User implements UserDetails {
     @Column(name = "surname")
     private String surname;
 
+    @Column(name = "age")
+    private int age;
+
     @Column(name = "password")
     private String password;
 
     @Column(name = "username")
     private String username;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -40,9 +44,11 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String name, String surname, String password, String username, List<Role> roles) {
+
+    public User(String name, String surname, int age, String password, String username, List<Role> roles) {
         this.name = name;
         this.surname = surname;
+        this.age = age;
         this.password = password;
         this.username = username;
         this.roles = roles;
@@ -70,6 +76,14 @@ public class User implements UserDetails {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public void setPassword(String password) {
@@ -121,6 +135,11 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getRoleString() {
+        return roles.stream().map(role -> role.getName().replace("ROLE_", ""))
+                .collect(Collectors.joining(" "));
     }
 
 }
