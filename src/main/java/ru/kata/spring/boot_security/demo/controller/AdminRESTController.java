@@ -33,7 +33,7 @@ public class AdminRESTController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<HttpStatus> newUser(@RequestBody User user) {
+    public ResponseEntity<HttpStatus> addNewUser(@RequestBody User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.addUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -50,7 +50,7 @@ public class AdminRESTController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<HttpStatus> edit(@RequestBody User user, @PathVariable("id") int id) {
+    public ResponseEntity<HttpStatus> editUser(@RequestBody User user, @PathVariable("id") int id) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.editUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -58,7 +58,7 @@ public class AdminRESTController {
 
 
     @DeleteMapping("/users/{id}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable("id") int id) {
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") int id) {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
