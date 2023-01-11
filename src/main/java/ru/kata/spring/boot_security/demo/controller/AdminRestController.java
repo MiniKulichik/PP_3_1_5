@@ -13,28 +13,27 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/admin")
-public class AdminRESTController {
+@RequestMapping("api")
+public class AdminRestController {
 
     private final UserService userService;
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AdminRESTController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
+    public AdminRestController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping
+    @GetMapping("/admin")
     public ResponseEntity<List<User>> showAllUsers() {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
-    @PostMapping("/new")
+    @PostMapping("/admin/new")
     public ResponseEntity<HttpStatus> addNewUser(@RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.addUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -44,14 +43,9 @@ public class AdminRESTController {
         return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
     }
 
-    @GetMapping("/userAuthentication")
-    public ResponseEntity<User> showAuthUser() {
-        return new ResponseEntity<>(userService.getAuthUser(), HttpStatus.OK);
-    }
 
-    @GetMapping("/users/{id}")
+    @PutMapping("/users/{id}")
     public ResponseEntity<HttpStatus> editUser(@RequestBody User user, @PathVariable("id") int id) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.editUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }

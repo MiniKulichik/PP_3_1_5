@@ -10,8 +10,6 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.DetailService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-import java.security.Principal;
-
 
 @Controller
 @RequestMapping("/user")
