@@ -8,7 +8,7 @@ public class StringRoleConverter implements Converter<String, Role> {
     @Override
     public Role convert(String id) {
         Role role = new Role();
-        role.setId(Integer.valueOf(id));
+        role.setId(Long.valueOf(id));
         return role;
     }
 }

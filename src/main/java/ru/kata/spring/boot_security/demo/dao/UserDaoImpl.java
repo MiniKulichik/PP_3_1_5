@@ -19,7 +19,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getUser(int id) {
+    public User getUser(Long id) {
         return entityManager.find(User.class,id);
     }
 
@@ -35,7 +35,7 @@ public class UserDaoImpl implements UserDao {
 
 
     @Override
-    public void deleteUser(int id) {
+    public void deleteUser(Long id) {
         entityManager.createQuery("DELETE FROM User u WHERE u.id =:id", User.class)
                 .setParameter("id", id).executeUpdate();
     }

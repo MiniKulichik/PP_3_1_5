@@ -4,13 +4,14 @@ import ru.kata.spring.boot_security.demo.model.Role;
 
 import java.util.List;
 
+
 public interface RoleDao {
 
-    Role getRole(int id);
+    Role getRole(Long id);
 
     List<Role> getList();
 
-    void deleteRole(int id);
+    void deleteRole(Long id);
 
     void editRole(Role role);
 

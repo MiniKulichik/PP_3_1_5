@@ -7,6 +7,7 @@ import ru.kata.spring.boot_security.demo.model.Role;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -20,7 +21,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role getRole(int id) {
+    public Role getRole(Long id) {
         return roleDao.getRole(id);
     }
 
@@ -30,7 +31,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void deleteRole(int id) {
+    public void deleteRole(Long id) {
         roleDao.deleteRole(id);
     }
 

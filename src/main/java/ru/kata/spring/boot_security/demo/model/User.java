@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -26,7 +27,7 @@ public class User implements UserDetails {
     private String surname;
 
     @Column(name = "age")
-    private int age;
+    private Integer age;
 
     @Column(name = "password")
     private String password;
@@ -34,18 +35,18 @@ public class User implements UserDetails {
     @Column(name = "username")
     private String username;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
 
-    private List<Role> roles;
+    private Set<Role> roles;
     public User() {
     }
 
 
-    public User(String name, String surname, int age, String password, String username, List<Role> roles) {
+    public User(String name, String surname, Integer age, String password, String username, Set<Role> roles) {
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -54,11 +55,11 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -78,11 +79,11 @@ public class User implements UserDetails {
         this.surname = surname;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -94,11 +95,11 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 

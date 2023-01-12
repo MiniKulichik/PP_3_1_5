@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+
 @Repository
 public class RoleDaoImpl implements RoleDao {
 
@@ -14,7 +15,7 @@ public class RoleDaoImpl implements RoleDao {
     private EntityManager entityManager;
 
     @Override
-    public Role getRole(int id) {
+    public Role getRole(Long id) {
         return entityManager.find(Role.class, id);
     }
 
@@ -25,7 +26,7 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     @Override
-    public void deleteRole(int id) {
+    public void deleteRole(Long id) {
         entityManager.createQuery("DELETE FROM Role r WHERE r.id =:id", Role.class)
                 .setParameter("id", id).executeUpdate();
     }
@@ -44,7 +45,7 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public List<Role> listByName(List<String> name) {
-        return  entityManager.createQuery("select r FROM Role r WHERE r.name in (:id)",
+        return entityManager.createQuery("select r FROM Role r WHERE r.name in (:id)",
                         Role.class).setParameter("id", name).getResultList();
     }
 
